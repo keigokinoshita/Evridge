@@ -1,7 +1,7 @@
 # Evridge
 Simple Web Application which everyone can inform their event or something
 
-###How to use
+### How to use
 
 ```
 pip install requirements.txt
