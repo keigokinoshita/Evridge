@@ -4,7 +4,7 @@ Simple Web Application which everyone can inform their event or something
 ### How to use
 
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 install the required packages.
 
