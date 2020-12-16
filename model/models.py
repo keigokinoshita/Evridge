@@ -1,8 +1,9 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime
 from model.database import Base
 from datetime import datetime
+from flask_login import UserMixin
 
-class User(Base):
+class User(UserMixin,Base):
     __tablename__ = 'users'
     user_id = Column(String(128), primary_key=True)
     address= Column(String(100))
@@ -17,6 +18,10 @@ class User(Base):
 
     def __repr__(self):
         return '<Name %r>' % (self.id)
+
+    def get_id(self):
+        return self.user_id
+
 
 class Event(Base):
     __tablename__ = 'events'

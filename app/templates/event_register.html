@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <h1>新規イベント登録</h1>
+
+    <form action="/event_register" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        {{ form.csrf_token }}
+        <input type="file" name="img">
+        {{ ', '.join(form.img.errors) }}
+        <input type="text" name="host" placeholder="host">
+        {{ ', '.join(form.host.errors) }}
+        <input type="text" name="title" placeholder="title">
+        {{ ', '.join(form.title.errors) }}
+        <input type="text" name="date" placeholder="2020/12/01">
+        {{ ', '.join(form.date.errors) }}
+        <input type="text" name="place" placeholder="東京都">
+        <input type="text" name="address" placeholder="address">
+        {{ ', '.join(form.address.errors) }}
+        <input type="text" name="tel" placeholder="tel">
+        <input type="text" name="body" placeholder="body">
+        <input type="text" name="url" placeholder="url">
+        <input type="submit" value="登録">
+    </form>
+</body>
+</html>

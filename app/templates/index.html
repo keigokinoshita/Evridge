@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+    <h1>Evridge</h1>
+    {% if status == "logout" %}
+    <p>ログアウトが完了しました</p>
+    {% endif %}
+
+    {% if not current_user.is_anonymous %}
+    <h1>{{current_user.user_id}}さん、こんにちは</h1>
+    <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
+    <li><a href="{{ url_for('event_register') }}">イベント登録</a></li>
+    {% else %}
+    <li><a href="{{ url_for('login') }}">Sign In</a></li>
+    {% endif %}
+
+    <p>Event</p>
+    {% for event in all_event %}
+    <p>{{event.title}}：{{event.body}}（{{event.date}}）</p>
+    {% endfor %}
+    </body>
+</html>

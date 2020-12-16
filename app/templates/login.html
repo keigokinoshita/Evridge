@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <h1>ログイン</h1>
+
+    {% if status == "user_notfound" %}
+    <p>ユーザが見つかりません</p>
+    {% elif status == "wrong_input" %}
+    <p>ユーザidかパスワードが間違っています</p>
+    {% elif status == "invalid" %}
+    <p>正しい形式で入力してください</p>
+    {% endif %}
+    <form action="/login" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" name="user_id" placeholder="user name">
+        <input type="password" name="password" placeholder="password">
+        <input type="submit" value="Login">
+    </form>
+    <a href="/user_register">新規登録</a>
+</body>
+</html>
