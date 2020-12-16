@@ -8,7 +8,6 @@ from wtforms import TextField, PasswordField
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms.fields.html5 import EmailField,DateField
 from wtforms.validators import InputRequired,DataRequired,Email,Optional
-#import email_validator
 from flask_wtf.csrf import CSRFProtect
 from hashlib import sha256
 import os
@@ -114,11 +113,13 @@ def event_register():
             filename = secure_filename(img.filename)
             img_url = os.path.join(app.config.UPLOAD_FOLDER, filename)
             img.save(img_url)
-            event = Event(current_user.user_id,img_url,form.host.data,form.address.data,form.tel.data,\
+
+            img_path = "../static/image/"+filename
+            event = Event(current_user.user_id,img_path,form.host.data,form.address.data,form.tel.data,\
                                 form.title.data,form.date.data,form.place.data,form.body.data,form.url.data,0)
         else:
-            img_url = None
-            event = Event(current_user.user_id,img_url,form.host.data,form.address.data,form.tel.data,\
+            img_path = None
+            event = Event(current_user.user_id,img_path,form.host.data,form.address.data,form.tel.data,\
                                 form.title.data,form.date.data,form.place.data,form.body.data,form.url.data,0)
 
         db_session.add(event)
