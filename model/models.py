@@ -17,7 +17,7 @@ class User(UserMixin,Base):
         self.hashed_password = hashed_password
 
     def __repr__(self):
-        return '<Name %r>' % (self.id)
+        return '<Name %r>' % (self.user_id)
 
     def get_id(self):
         return self.user_id

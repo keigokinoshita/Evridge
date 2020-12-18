@@ -9,7 +9,7 @@
     {% endif %}
 
     {% if not current_user.is_anonymous %}
-    <h1>{{current_user.user_id}}さん、こんにちは</h1>
+    <h1>ユーザ名：{{current_user.user_id}}</h1>
     <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
     <li><a href="{{ url_for('event_register') }}">イベント登録</a></li>
     {% else %}

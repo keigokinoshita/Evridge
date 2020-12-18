@@ -12,7 +12,6 @@ from flask_wtf.csrf import CSRFProtect
 from hashlib import sha256
 import os
 from werkzeug.utils import secure_filename
-print(os.getcwd())
 
 #Flaskオブジェクトの生成
 app = Flask(__name__)
@@ -25,7 +24,7 @@ login_manager.login_view = "login"
 
 csrf = CSRFProtect(app)
 
-ALLOWED_EXTENSIONS = set(['pdf','png', 'jpg', 'jpeg','gif'])
+ALLOWED_EXTENSIONS = set(['pdf','png', 'jpg', 'jpeg','gif','HEIC'])
 UPLOAD_FOLDER = 'app/static/image/'
 app.config.UPLOAD_FOLDER = UPLOAD_FOLDER
 app.config.MAX_CONTENT_LENGTH = 4 * 1024 * 1024  # 4MB max-limit.
@@ -54,7 +53,7 @@ class UserRegisterForm(FlaskForm):
     tel = TextField('tel', validators=[DataRequired()])
 
 class EventRegisterForm(FlaskForm):
-    img = FileField('img', validators=[Optional(), FileAllowed(['pdf', 'png', 'jpg', 'jpeg','gif'])])
+    img = FileField('img', validators=[Optional(), FileAllowed(['pdf', 'png', 'jpg', 'jpeg','gif','HEIC'])])
     host = TextField('host', validators=[DataRequired()])
     title = TextField('title', validators=[DataRequired()])
     date = DateField('date',format='%Y/%m/%d',validators=[DataRequired()])
