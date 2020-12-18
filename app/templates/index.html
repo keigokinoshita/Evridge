@@ -16,13 +16,18 @@
     <li><a href="{{ url_for('login') }}">Sign In</a></li>
     {% endif %}
 
-    <p>Event</p>
+    <h2>Event</h2>
     {% for event in all_event %}
-    {% if event.img_path %}
+    ------------------------------
 
-    <img src="{{event.img_path}}" alt="image" style="width: 200px;">
+    <br> <p>{{event.title}}：{{event.body}}（{{event.date.strftime('%Y/%m/%d')}}）</p>
+    
+    {% if event.img_path %}
+    </br><img src="{{event.img_path}}" alt="image" style="width: 200px;"></br>
     {% endif %}
-    <p>{{event.title}}：{{event.body}}（{{event.date.strftime('%Y/%m/%d')}}）</p>
+    
+    <a href="{{ url_for('show_detail',event_id=event.event_id, user_id=event.user_id) }}">詳細ページ</a></br>
+
     {% endfor %}
     </body>
 </html>

@@ -127,5 +127,10 @@ def event_register():
         return render_template("event_register.html",status="success",form=form,filename=img_path)
     return render_template("event_register.html",status="fail",form=form)
 
+
+@app.route('/detail/<user_id>/<int:event_id>')
+def show_detail(user_id,event_id):
+    event = Event.query.filter_by(event_id=event_id).first()
+    return render_template("detail.html",event=event)
 if __name__ == "__main__":
     app.run(debug=True)
