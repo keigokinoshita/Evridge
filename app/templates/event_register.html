@@ -1,29 +1,45 @@
 <!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>新規イベント登録</title>
 </head>
 <body>
-    <h1>新規イベント登録</h1>
+    <div class="header">
+     <h1>新規イベント登録</h1>
+    </div>
 
     <form action="/event_register" method="post" enctype="multipart/form-data">
+        <p>写真をアップロードしてください</p>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         {{ form.csrf_token }}
         <input type="file" name="img">
         {{ ', '.join(form.img.errors) }}
+        <p>主催者のお名前</p>
         <input type="text" name="host" placeholder="host">
         {{ ', '.join(form.host.errors) }}
-        <input type="text" name="title" placeholder="title">
-        {{ ', '.join(form.title.errors) }}
-        <input type="text" name="date" placeholder="2020/12/01">
-        {{ ', '.join(form.date.errors) }}
-        <input type="text" name="place" placeholder="東京都">
+        <p>メールアドレス</p>
         <input type="text" name="address" placeholder="address">
         {{ ', '.join(form.address.errors) }}
+        <p>電話番号</p>
         <input type="text" name="tel" placeholder="tel">
-        <input type="text" name="body" placeholder="body">
+        <p>タイトル</p>
+        <input type="text" name="title" placeholder="title">
+        {{ ', '.join(form.title.errors) }}
+        <p>日付</p>
+        <input type="text" name="date" placeholder="2020/12/01">
+        {{ ', '.join(form.date.errors) }}
+        <p>場所</p>
+        <input type="text" name="place" placeholder="東京都">
+        <p>説明文</p>
+        <textarea type="text" name="body" placeholder="body"></textarea>
+        <p>詳細リンク</p>
         <input type="text" name="url" placeholder="url">
+        <p>最後に登録ボタンを押してください</p>
         <input type="submit" value="登録">
     </form>
+    
+    <div class="footer">
+    </div>
 </body>
 </html>
