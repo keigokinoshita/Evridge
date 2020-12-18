@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <h1>詳細</h1>
+
+    {% if event.img_path %}
+    <p>{{event.img_path}}</p>
+    <!--<img src="{{event.img_path}}" alt="image" style="width: 200px;">-->
+    
+    
+    {% endif %}
+    <p>{{event.title}}：{{event.body}}（{{event.date.strftime('%Y/%m/%d')}}）</p>
+    <img src="../static/image/back.png" alt="image" style="width: 200px;">
+
+</body>
+</html>
