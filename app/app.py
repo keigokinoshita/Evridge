@@ -124,8 +124,8 @@ def event_register():
         db_session.add(event)
         db_session.commit()
         
-        return redirect(url_for("index"))
-    return render_template("event_register.html",form=form)
+        return render_template("event_register.html",status="success",form=form,filename=img_path)
+    return render_template("event_register.html",status="fail",form=form)
 
 if __name__ == "__main__":
     app.run(debug=True)

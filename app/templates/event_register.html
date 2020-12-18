@@ -8,7 +8,13 @@
     <div class="header">
      <h1>新規イベント登録</h1>
     </div>
-
+    {% if status == "success" %}
+    <p>登録完了</p>
+    {% if not filename == None %}
+        <img src="{{filename}}" alt="image" style="width: 200px;">
+    {% endif %}
+    {{ form.host.data }}
+    {% else %}
     <form action="/event_register" method="post" enctype="multipart/form-data">
         <p>写真をアップロードしてください</p>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -38,6 +44,7 @@
         <p>最後に登録ボタンを押してください</p>
         <input type="submit" value="登録">
     </form>
+    {% endif %}
     
     <div class="footer">
     </div>
