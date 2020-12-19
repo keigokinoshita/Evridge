@@ -16,18 +16,37 @@
     <li><a href="{{ url_for('login') }}">Sign In</a></li>
     {% endif %}
 
-    <h2>Event</h2>
-    {% for event in all_event %}
-    ------------------------------
+    <h2>Event search</h2>
+    <form action='' method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>  
+        
+        <p>場所</p>
+        <input type="text" name="place" placeholder="東京都">
+        <p>日付</p>
+        <input type="text" name="date" placeholder="2020/12/01">
+        <input type="submit" value="Search">
+    </form>
 
-    <br> <p>{{event.title}}：{{event.body}}（{{event.date.strftime('%Y/%m/%d')}}）</p>
-    
-    {% if event.img_path %}
-    </br><img src="{{event.img_path}}" alt="image" style="width: 200px;"></br>
+    {% if status == "search_success"  %}
+            <h2>Result  条件：{{form.place.data,form.date.data}}</h2>
     {% endif %}
+    <h2>Event List</h2>
+        {% if not events%}
+        <p>None</p>
+        {% endif %}
+        {% for event in events %}
+        ------------------------------
+
+        <br> <p>{{event.title}}：{{event.body}}（{{event.date.strftime('%Y/%m/%d')}}）</p>
+        
+        {% if event.img_path %}
+        </br><img src="{{event.img_path}}" alt="image" style="width: 200px;"></br>
+        {% endif %}
     
     <a href="{{ url_for('show_detail',event_id=event.event_id, user_id=event.user_id) }}">詳細ページ</a></br>
 
     {% endfor %}
+
+
     </body>
 </html>

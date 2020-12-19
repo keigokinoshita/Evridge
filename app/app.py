@@ -12,11 +12,12 @@ from flask_wtf.csrf import CSRFProtect
 from hashlib import sha256
 import os
 from werkzeug.utils import secure_filename
+import datetime
 
 #Flaskオブジェクトの生成
 app = Flask(__name__)
 
-app.secret_key = b'\xabc3\x9f\xa8\xbc\xb6\xb5\xcauy\xc9\x8e\xc7\x9e!\xefo\x99}\x1c\x80\x0f\x1f'
+app.secret_key = key.SECRET_KEY
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -29,18 +30,10 @@ UPLOAD_FOLDER = 'app/static/image/'
 app.config.UPLOAD_FOLDER = UPLOAD_FOLDER
 app.config.MAX_CONTENT_LENGTH = 4 * 1024 * 1024  # 4MB max-limit.
 
-@login_manager.user_loader 
-def load_user(user_id):
-    user = User.query.filter_by(user_id = user_id).first()
-    return user
 
-@app.route("/")
-@app.route("/index")
-def index():
-    #以下を変更
-    all_event = Event.query.all()
-    status = request.args.get("status")
-    return render_template("index.html",all_event=all_event,status=status)
+class SearchForm(FlaskForm):
+    place = TextField('place',validators=[DataRequired()])
+    date = DateField('date',format='%Y/%m/%d',validators=[DataRequired()])
 
 class LoginForm(FlaskForm):
     user_id = TextField('user_id', validators=[DataRequired()])
@@ -62,6 +55,30 @@ class EventRegisterForm(FlaskForm):
     tel = TextField('tel', validators=[DataRequired()])
     body = TextField('body', validators=[Optional()])
     url = TextField('url', validators=[Optional()])
+
+@login_manager.user_loader 
+def load_user(user_id):
+    user = User.query.filter_by(user_id = user_id).first()
+    return user
+
+@app.route("/",methods=["GET","POST"])
+#@app.route("/",methods=["GET"])
+@app.route("/index",methods=["GET","POST"])
+#@app.route("/index",methods=["GET"])
+def index():
+    #以下を変更
+    form = SearchForm()
+
+    if form.validate_on_submit():
+        date = str(form.date.data)+" 00:00:00.000000"
+        events = Event.query.filter_by(place=form.place.data,date=date).all()
+        status = "search_success"
+
+        return render_template("index.html",events=events,status=status,form=form)
+
+    events = Event.query.all()
+    status = "all_events"
+    return render_template("index.html",events=events,status=status,form=form)
 
 @app.route('/login', methods=['GET','POST'])
 def login():
