@@ -13,6 +13,7 @@ from hashlib import sha256
 import os
 from werkzeug.utils import secure_filename
 import datetime
+from sqlalchemy import desc
 
 #Flaskオブジェクトの生成
 app = Flask(__name__)
@@ -32,8 +33,8 @@ app.config.MAX_CONTENT_LENGTH = 4 * 1024 * 1024  # 4MB max-limit.
 
 
 class SearchForm(FlaskForm):
-    place = TextField('place',validators=[DataRequired()])
-    date = DateField('date',format='%Y/%m/%d',validators=[DataRequired()])
+    place = TextField('place',validators=[Optional()])
+    date = DateField('date',format='%Y/%m/%d',validators=[Optional()])
 
 class LoginForm(FlaskForm):
     user_id = TextField('user_id', validators=[DataRequired()])
@@ -62,23 +63,41 @@ def load_user(user_id):
     return user
 
 @app.route("/",methods=["GET","POST"])
-#@app.route("/",methods=["GET"])
 @app.route("/index",methods=["GET","POST"])
-#@app.route("/index",methods=["GET"])
 def index():
     #以下を変更
     form = SearchForm()
-
+    sort_type = request.args.get("sort", default="", type=str)
+    select=0
     if form.validate_on_submit():
         date = str(form.date.data)+" 00:00:00.000000"
-        events = Event.query.filter_by(place=form.place.data,date=date).all()
+        if sort_type == "popular":
+            select=1
+            events = Event.query.filter_by(place=form.place.data,date=date).all()
+        elif sort_type == "new":
+            select=2
+            events = Event.query.filter_by(place=form.place.data,date=date).order_by(desc(Event.date)).all()
+        elif sort_type == "near":
+            select=3
+            events = Event.query.filter_by(place=form.place.data,date=date).all()
+        else:
+            events = Event.query.filter_by(place=form.place.data,date=date).all()
         status = "search_success"
+        return render_template("index.html",events=events,status=status,form=form,select=select)
 
-        return render_template("index.html",events=events,status=status,form=form)
-
-    events = Event.query.all()
+    if sort_type == "popular":
+        select=1
+        events = Event.query.all()
+    elif sort_type == "new":
+        select=2
+        events = Event.query.order_by(desc(Event.date)).all()
+    elif sort_type == "near":
+        select=3
+        events = Event.query.all()
+    else:
+        events = Event.query.all()
     status = "all_events"
-    return render_template("index.html",events=events,status=status,form=form)
+    return render_template("index.html",events=events,status=status,form=form,select=select)
 
 @app.route('/login', methods=['GET','POST'])
 def login():
