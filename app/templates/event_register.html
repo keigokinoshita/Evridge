@@ -3,50 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <title>新規イベント登録</title>
+    <link rel="stylesheet" href="/style.css" type="text/css">
+    <style> 
+        .header{
+            background-color:#45cbdd;
+            color: #fff;
+            height: 100px;
+        }
+        .header-logo{
+            float: left;
+            font-size:40px;
+            padding:25px 40px;
+        }
+
+        .main{
+            padding:20px 80px;
+        }
+
+        .container h1{
+            text-align: center;
+            font-size:60px;
+            background-image: url(header.jpg);
+        }
+
+        .container h2{
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .container h3{
+            text-align: center;
+            font-size: 20px;
+            color :#e70e3d;
+            border-bottom:2px solid #dee7ec;
+        }
+
+        .form{
+            margin: 0 30%;
+            font-size: 20px;
+        }
+
+        input{
+            float: center;
+            width:400px;
+            margin-top:10px;
+            margin-bottom:30px;
+            padding:20px;
+            font-size:18px;
+            border:1px solid #dee7ec;
+        
+        }
+
+        textarea {
+            width: 400px;
+            height: 10em;
+            margin-top:10px;
+            margin-bottom:30px;
+            padding:20px;
+            font-size:18px;
+            border:1px solid #dee7ec;
+        }
+
+        select { width: 250px; }
+
+        .footer {
+            background-color: #2f5167;
+            color: #fff;
+            height: 80px;
+            padding: 40px;
+        }
+
+
+        .footer-logo {
+            float: left;
+            font-size: 40px;
+            padding:20px;
+        
+        }
+    </style>
+
 </head>
 <body>
     <div class="header">
-     <h1>新規イベント登録</h1>
+        <div class="header-logo">Evridge</div>
     </div>
-    {% if status == "success" %}
-    <p>登録完了</p>
-    {% if not filename == None %}
-        <img src="{{filename}}" alt="image" style="width: 200px;">
-    {% endif %}
-    {{ form.host.data }}
-    {% else %}
-    <form action="/event_register" method="post" enctype="multipart/form-data">
-        <p>写真をアップロードしてください</p>
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        {{ form.csrf_token }}
-        <input type="file" name="img">
-        {{ ', '.join(form.img.errors) }}
-        <p>主催者のお名前</p>
-        <input type="text" name="host" placeholder="host">
-        {{ ', '.join(form.host.errors) }}
-        <p>メールアドレス</p>
-        <input type="text" name="address" placeholder="address">
-        {{ ', '.join(form.address.errors) }}
-        <p>電話番号</p>
-        <input type="text" name="tel" placeholder="tel">
-        <p>タイトル</p>
-        <input type="text" name="title" placeholder="title">
-        {{ ', '.join(form.title.errors) }}
-        <p>日付</p>
-        <input type="text" name="date" placeholder="2020/12/01">
-        {{ ', '.join(form.date.errors) }}
-        <p>場所</p>
-        <input type="text" name="place" placeholder="東京都">
-        <p>説明文</p>
-        <textarea type="text" name="body" placeholder="body"></textarea>
-        <p>詳細リンク</p>
-        <input type="text" name="url" placeholder="url">
-        <p>最後に登録ボタンを押してください</p>
-        <input type="submit" value="登録">
-    </form>
-    {% endif %}
-    
+    <div class="main">
+
+        <div class="container">
+        <h1>イベント登録フォーム</h1>
+        <h2>新しいイベントを登録して参加者を集めましょう</h2>
+        <h3>※全て必須項目ですので必ず入力してください</h3>
+        </div>
+        <div class="form">
+            {% if status == "success" %}
+            <p>登録完了</p>
+            {% if not filename == None %}
+                <img src="{{filename}}" alt="image" style="width: 200px;">
+            {% endif %}
+            {{ form.host.data }}
+            {% else %}
+            <form action="/event_register" method="post" enctype="multipart/form-data">
+                <p>宣伝写真</p>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                {{ form.csrf_token }}
+                <input type="file" name="img">
+                {{ ', '.join(form.img.errors) }}
+                <p>主催者様のお名前</p>
+                <input type="text" name="host" placeholder="host">
+                {{ ', '.join(form.host.errors) }}
+                <p>メールアドレス</p>
+                <input type="text" name="address" placeholder="address">
+                {{ ', '.join(form.address.errors) }}
+                <p>電話番号</p>
+                <input type="text" name="tel" placeholder="tel">
+                <p>タイトル</p>
+                <input type="text" name="title" placeholder="title">
+                {{ ', '.join(form.title.errors) }}
+                <p>ジャンル</p>
+                <select name="genre">
+                    <option value="music">音楽</option>
+                    <option value="sport">スポーツ</option>
+                    <option value="entame">エンターテインメント</option>
+                </select>
+                <p>日付</p>
+                <input type="text" name="date" placeholder="2020/12/01">
+                {{ ', '.join(form.date.errors) }}
+                <p>場所</p>
+                <input type="text" name="place" placeholder="東京都">
+                {{ ', '.join(form.place.errors) }}
+                <p>説明文</p>
+                <textarea type="text" name="body" placeholder="body"></textarea>
+                <p>詳細リンク</p>
+                <input type="text" name="url" placeholder="url">
+                {{ ', '.join(form.url.errors) }}
+                <p>最後に登録ボタンを押してください</p>
+                <input type="submit" value="登録">
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
     <div class="footer">
+        <div class="footer-logo">Knocks</div>
     </div>
 </body>
 </html>
