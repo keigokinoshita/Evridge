@@ -1,28 +1,89 @@
 <!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
     <title>詳細ページ</title>
+	<style>
+        .header{
+            background-color:#45cbdd;
+            color: #fff;
+            height: 100px;
+        }
+        .header-logo{
+            float: left;
+            font-size: 40px;
+            padding: 25px 40px;
+        }
+		.center{
+			text-align: center;
+
+		}
+        .main{
+            padding: 20px 80px;
+        }
+		.container h1{
+            text-align: center;
+            font-size: 60px;
+        }
+		.container h2{
+            text-align: center;
+            font-size: 20px;
+			margin: 0 30%;
+		}
+		.footer {
+            background-color: #2f5167;
+            color: #fff;
+            height: 80px;
+            padding: 40px;
+        }
+        .footer-logo {
+            float: left;
+            font-size: 40px;
+            padding: 20px;
+        }
+	</style>
 </head>
 <body>
-    <h1>詳細</h1>
+	<div class="header">
+        <div class="header-logo">Evridge</div>
+    </div>
 
-    {% if event.img_path %}
-    <img src="../../{{event.img_path}}" alt="image" style="width: 200px;">
-    
-    
-    {% endif %}
-    <p>
-        {{event.user_id}} 
-        {{event.host}}
-        {{event.address}}
-        {{event.tel}}
-        {{event.title}}
-        {{event.date.strftime('%Y/%m/%d')}}
-        {{event.place}}
-        {{event.body}}
-        {{event.url}}
+	<div class="main">
+		<div class="container">
+			<h1>イベント詳細</h1>
+		</div>
+	</div>
+	<HR>
 
-    </p>
+	<div class="main">
+		<div class="center">
+			{% if event.img_path %}
+   			<img src="../../{{event.img_path}}" alt="image" align="middle" style="width: 500px;">
+     		{% endif %}
+		</div>
+	</div>
+	<HR>
 
+	<div class="main">
+		<div class="container">
+			<h2>
+			<p>【タイトル】</p>
+			<p>{{event.title}}</p>
+			<p>【開催日時】</p>
+			<p>{{event.date.strftime('%Y/%m/%d')}}</p>
+			<p>【開催場所】</p>
+			<p>{{event.place}}</p>
+			<p>【内容】</p>
+			<p>{{event.body}}</p>
+			<p>【主催者】<BR>名前(団体名):{{event.host}}<BR>メールアドレス:{{event.address}}<BR>TEL:{{event.tel}}</p>
+			<p>【詳細リンク】</p>
+			<p>{{event.url}}</p>
+			</h2>
+		</div>
+	</div>
+
+	<div class="footer">
+        <div class="footer-logo">Knocks</div>
+    </div>
 </body>
 </html>
